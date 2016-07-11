@@ -1,0 +1,223 @@
+clear all
+clc
+
+filename = 'Análises das Potências v3.xlsx';
+sheet = 'Premissas';
+xlPremissas = 'C3:H17';
+premissas = xlsread(filename,sheet,xlPremissas);
+
+[l, c] = size(premissas);
+
+q = le_vazoes();
+
+%rho = Premissas(7,1)
+rho = 1000; % Massa específica da água (Kg/m³)
+g = 9.81;   % m³/s²
+
+L = zeros(6,1);
+for i=1:6
+    nome = strcat('pch', int2str(i));
+    L(i) = size(q.(nome), 1);
+end
+
+ANOS = floor(L./12);    % dim do histórico afluências (anos)
+
+% potência instalada por usina (MW) 
+PinstMW = ones(1, c)*30;
+
+
+% xlPremissas = 'C3:H17';
+% Premissas
+
+rend = zeros(1,c);  % rendimento (%)
+hl = zeros(1,c);    % queda líquida (m)
+qs = zeros(1,c);    % vazão sanitária (m³/s)
+desc = zeros(1,c);  % descontos = (1-TEIF)*(1-IP)*(1-PerdasEletric)
+for i = 1:c
+    rend(1, i) = premissas(2,i);
+    hl(1, i) = premissas(5,i);
+    qs(1, i) = premissas(6,i);
+    desc(1, i) = premissas(13,i);
+end
+
+% ni = Premissas(2,1); 
+% hL = Premissas(5,1); 
+% qS = Premissas(6,1);
+% Desc = Premissas(13,1); 
+    
+H = Dados(:,1); % Horas
+%q = Dados(:,3); % vazão
+
+% Vetor de potências estimadas    
+Pest = rho*g*hL*ni*(q-qS); % Potência Estimada (W)
+
+Pinst = PinstMW.*1000000; %Conversão MW -> W
+
+% Matriz de potências geradas (W)
+Pger = zeros(l,cenarios);
+for i=1:cenarios
+    Pger(:,i) = min(Pest, Pinst(:,i)).*Desc; % Potência Gerada (W)
+end
+
+%Matriz Geração % W -> MW
+PgerMW = Pger./1000000; 
+
+%Matriz Geração % MW -> MWh
+PgerMWh = zeros(l,cenarios);
+for i=1:cenarios
+    PgerMWh(:,i) = PgerMW(:,i).*H; % Potência Gerada (W)
+end
+
+% Valores médios anuais
+PgerMWmAno = zeros(anos,cenarios);
+dvpPgerAno = zeros(anos,cenarios);
+
+for c=1:cenarios
+    for i=1:anos
+        ini = 1 + (i-1)*12;
+        fim = i*12;
+        % Energia Média Anual (ponderada pelas horas do mês) "MWm = MWh/h" (ini:fim =12)
+        PgerMWmAno(i, c) = sum(PgerMWh(ini:fim,c))./sum(H(ini:fim,1));
+        % Desvio Padrão da  Energia Média Anual 
+        dvpPgerAno(i, c) = std(PgerMWh(ini:fim,c)./H(ini:fim,1));
+    end
+end
+
+qAno = zeros(anos,1); % Potência vezes vazão
+dvp_qAno = zeros(anos,1);
+for i=1:anos
+     ini = 1 + (i-1)*12;
+     fim = i*12;
+    % Vazão média anual
+    qAno(i)= sum(q(ini:fim,1))/12;
+    % Desvio padrão da vazão  anual
+    dvp_qAno(i) = std(q(ini:fim,1));
+end
+
+
+
+ disp('   PgerMW30');
+ disp(PgerMW(:,6)); 
+ clc
+ disp( 'PgerMWh30');
+ disp(PgerMWh(:, 6)); 
+%*******************  Estatísticas  ****************
+
+
+%----- Média aritmética igual a PRT 463/2009
+MA_PRT = zeros(1,cenarios);
+perMA_PRT = zeros(1,cenarios);
+dvpMA_PRT = zeros(1,cenarios);
+dvpMA_PRTabs = zeros(1,cenarios);
+for c = 1:cenarios
+    % Média com é calculada na PoRTaria do MME
+    MA_PRT(1, c) = mean(PgerMW(:, c));  
+    % Permanencia de anos em que PgerWm ficou acima da MA.
+    perMA_PRT(1, c) = (sum(PgerMWmAno(:, c) >= MA_PRT(1, c))/anos)*100;
+    % Desvio dos resíduos em relação a MA ao quadrado
+    dvpMA_PRT(1, c) = std((PgerMWmAno(:, c) - MA_PRT(1, c)).^2);
+    % Desvio dos resíduos em relação a MA em módulo
+    dvpMA_PRTabs(1, c) = std(abs(PgerMWmAno(:, c) - MA_PRT(1, c)));
+end
+
+
+%----- Média Aritmética ponderada pelas horas dos meses
+MA = zeros(1,cenarios);
+perMA = zeros(1,cenarios);
+dvpMA = zeros(1,cenarios);
+dvpMAabs = zeros(1,cenarios);
+for c = 1:cenarios
+    % Média com é calculada na PoRTaria do MME
+    MA(1, c) = mean(PgerMWmAno(:, c));  
+    % Permanencia de anos em que PgerWm ficou acima da MA.
+    perMA(1, c) = (sum(PgerMWmAno(:, c) >= MA(1, c))/anos)*100;
+    % Desvio dos resíduos em relação a MA ao quadrado
+    dvpMA(1, c) = std((PgerMWmAno(:, c) - MA(1, c)).^2);
+    % Desvio dos resíduos em relação a MA em módulo
+    dvpMAabs(1, c) = std(abs(PgerMWmAno(:, c) - MA(1, c)));
+end
+
+%----- Média Harmônica ponderada pelas horas nos meses
+MH = zeros(1,cenarios);
+perMH = zeros(1,cenarios);
+dvpMH = zeros(1,cenarios);
+dvpMHabs = zeros(1,cenarios);
+for c = 1:cenarios
+    % Média com é calculada na PoRTaria do MME
+    MH(1, c) = harmmean(PgerMWmAno(:, c));  
+    % Permanencia de anos em que PgerWm ficou acima da MA.
+    perMH(1, c) = (sum(PgerMWmAno(:, c) >= MH(1, c))/anos)*100;
+    % Desvio dos resíduos em relação a MA ao quadrado
+    dvpMH(1, c) = std((PgerMWmAno(:, c) - MH(1, c)).^2);
+    % Desvio dos resíduos em relação a MA em módulo
+    dvpMHabs(1, c) = std(abs(PgerMWmAno(:, c) - MH(1, c)));
+%     % Média com é calculada na PoRTaria do MME
+%     MH(1, c) = harmmean(PgerMW(:, c));  
+%     % Permanencia de anos em que PgerWm ficou acima da MA.
+%     perMH(1, c) = (sum(PgerMW(:, c) >= MH(1, c))/l)*100;
+%     % Desvio dos resíduos em relação a MA ao quadrado
+%     dvpMH(1, c) = std((PgerMW(:, c) - MH(1, c)).^2);
+%     % Desvio dos resíduos em relação a MA em módulo
+%     dvpMHabs(1, c) = std(abs(PgerMW(:, c) - MH(1, c)));
+end
+
+%----- Média Harmônica ponderada pelas horas mensais e vazões anuais
+MHP = zeros(1,cenarios);
+perMHP = zeros(1,cenarios);
+dvpMHP = zeros(1,cenarios);
+dvpMHPabs = zeros(1,cenarios);
+
+for c = 1:cenarios
+    %MHP =(sum(qAno)/sum(qAno./PgerMWmAno));
+    % Média com é calculada na PoRTaria do MME
+    MHP(1, c) = (sum(qAno)/sum(qAno./PgerMWmAno(:, c)));
+    % Permanencia de anos em que PgerWm ficou acima da MA.
+    perMHP(1, c) = (sum(PgerMWmAno(:, c) >= MHP(1, c))/anos)*100;
+    % Desvio dos resíduos em relação a MA ao quadrado
+    dvpMHP(1, c) = std((PgerMWmAno(:, c) - MHP(1, c)).^2);
+    % Desvio dos resíduos em relação a MA em módulo
+    dvpMHPabs(1, c) = std(abs(PgerMWmAno(:, c) - MHP(1, c)));
+end
+% Impressão de resutados
+disp ('   ');
+disp ('------------- MÉDIAS --------------');
+disp (['        Pinst=' num2str(PinstMW(1,1)) '     Pinst=' num2str(PinstMW(1,2)) '     Pinst=' num2str(PinstMW(1,3)) '     Pinst=' num2str(PinstMW(1,4))  '     Pinst=' num2str(PinstMW(1,5)) '     Pinst=' num2str(PinstMW(1,6))]);
+disp(['MA_PRT= ' num2str(MA_PRT)]);
+disp(['    MA= '       num2str(MA)]);
+disp(['    MH= '       num2str(MH)]);
+disp(['   MHP= '     num2str(MHP)]);
+disp ('   ');
+
+disp ('------------- PERMANÊNCIAS --------------');
+disp (['           Pinst=' num2str(PinstMW(1,1)) '     Pinst=' num2str(PinstMW(1,2)) '     Pinst=' num2str(PinstMW(1,3)) '     Pinst=' num2str(PinstMW(1,4))  '     Pinst=' num2str(PinstMW(1,5)) '     Pinst=' num2str(PinstMW(1,6))]);
+disp(['perMA_PRT= ' num2str(perMA_PRT)]);
+disp(['    perMA= '   num2str(perMA)]);
+disp(['    perMH= '      num2str(perMH)]);
+disp(['   perMHP= '     num2str(perMHP)]);
+disp ('   ');
+
+disp ('------------- DESV. RESÍDUOS AO QUADRADO ----------------');
+disp (['           Pinst=' num2str(PinstMW(1,1)) '     Pinst=' num2str(PinstMW(1,2)) '     Pinst=' num2str(PinstMW(1,3)) '     Pinst=' num2str(PinstMW(1,4))  '     Pinst=' num2str(PinstMW(1,5)) '     Pinst=' num2str(PinstMW(1,6))]);
+disp(['dvpMA_PRT= ' num2str(dvpMA_PRT)]);
+disp(['    dvpMA= '   num2str(dvpMA)]);
+disp(['    dvpMH= '     num2str(dvpMH)]);
+disp(['   dvpMHP= '    num2str(dvpMHP)]);
+disp ('   ');
+
+disp ('------------- DESV. RESÍDUOS EM MÓDULO--------------');
+disp (['              Pinst=' num2str(PinstMW(1,1)) '     Pinst=' num2str(PinstMW(1,2)) '     Pinst=' num2str(PinstMW(1,3)) '     Pinst=' num2str(PinstMW(1,4))  '     Pinst=' num2str(PinstMW(1,5)) '   Pinst=' num2str(PinstMW(1,6))]);
+disp(['dvpMA_PRTabs= '    num2str(dvpMA_PRTabs)]);
+disp(['    dvpMAabs= '           num2str(dvpMAabs)]);
+disp(['    dvpMHabs= '           num2str(dvpMHabs)]);
+disp(['   dvpMHPabs= '          num2str(dvpMHPabs)]);
+disp ('-----------------------------');
+%---------------------------
+
+% desvio padrão muito menor que a média -> série comportada 
+% -> média aritmética anual qAno
+% disp(['  qAno  ', '    dvp_qAno ', 'coef.Var(%)', '   PgerWm 1',' PgerWm 2','  PgerWm 3','  PgerWm 4', '   dvpPgerAno']);
+% disp([qAno, dvp_qAno, 100*(dvp_qAno./qAno), PgerMWmAno, dvpPgerAno]); 
+
+% vMA = ones(anos,1)*MA;
+% vMH = ones(anos,1)*MH;
+% vMHP = ones(anos,1)*MHP;

@@ -98,6 +98,7 @@ end
  clc
  disp( 'PgerMWh30');
  disp(PgerMWh(:, 6)); 
+ 
 %*******************  Estatísticas  ****************
 
 

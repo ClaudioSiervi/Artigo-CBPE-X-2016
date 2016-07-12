@@ -1,7 +1,12 @@
+clc; clear all;
 
-u = 6;
-pch(u) = UsinaD;
+u = 6;      % número de usinas
+
+Dados = ImportaDados;
+Pch(u) = UsinaD;
 
 for i = 1:u
-    pch(i).nome = strcat('pch', int2str(i));
+    Pch(i).nome = strcat('pch', int2str(i));
+    Pch(i).q = Dados.LimpaSerie(Dados.vazoes(:, i));
+    
 end

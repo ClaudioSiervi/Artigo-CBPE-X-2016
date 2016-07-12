@@ -4,11 +4,12 @@ u = 6;      % número de usinas
 
 Dados = ImportaDados;
 Pch(u) = UsinaDistribuida;
+Ferramenta = Ferramentas;
 
 for i = 1:u
     Pch(i).nome = strcat('pch', int2str(i));
-    Pch(i).horas = Dados.LimpaSerie(Dados.horas(:, i));
-    Pch(i).q = Dados.LimpaSerie(Dados.vazoes(:, i));
+    Pch(i).horas = Ferramenta.EstimaHoras(Ferramenta.LimpaSerie(Dados.horas(:, i)));
+    Pch(i).q = Ferramenta.LimpaSerie(Dados.vazoes(:, i));
     Pch(i).p_inst = Dados.premissas(1, i);
     Pch(i).rend = Dados.premissas(2, i);
     Pch(i).hl = Dados.premissas(3, i);

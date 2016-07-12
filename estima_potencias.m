@@ -1,57 +1,53 @@
 clear all
 clc
-
-filename = 'Análises das Potências v3.xlsx';
-sheet = 'Premissas';
-xlPremissas = 'C3:H17';
-premissas = xlsread(filename,sheet,xlPremissas);
-
-[l, c] = size(premissas);
-
-q = le_vazoes();
-
-%rho = Premissas(7,1)
-rho = 1000; % Massa específica da água (Kg/m³)
-g = 9.81;   % m³/s²
-
-L = zeros(6,1);
-for i=1:6
-    nome = strcat('pch', int2str(i));
-    L(i) = size(q.(nome), 1);
-end
-
-ANOS = floor(L./12);    % dim do histórico afluências (anos)
-
-% potência instalada por usina (MW) 
-PinstMW = ones(1, c)*30;
-
-
-% xlPremissas = 'C3:H17';
-% Premissas
-
-rend = zeros(1,c);  % rendimento (%)
-hl = zeros(1,c);    % queda líquida (m)
-qs = zeros(1,c);    % vazão sanitária (m³/s)
-desc = zeros(1,c);  % descontos = (1-TEIF)*(1-IP)*(1-PerdasEletric)
-for i = 1:c
-    rend(1, i) = premissas(2,i);
-    hl(1, i) = premissas(5,i);
-    qs(1, i) = premissas(6,i);
-    desc(1, i) = premissas(13,i);
-end
-
-% ni = Premissas(2,1); 
-% hL = Premissas(5,1); 
-% qS = Premissas(6,1);
-% Desc = Premissas(13,1); 
+num_usinas =6;
+    arquivo = 'Dados_Artigo.xlsx';
+    aba = 'vazões';
+    caminho = pwd;
+    rota = strcat(caminho,'\',arquivo);
+    intervalo = 'C5:H1000';
+    premissas = xlsread(rota, aba, intervalo);
     
-H = Dados(:,1); % Horas
-%q = Dados(:,3); % vazão
-
-% Vetor de potências estimadas    
-Pest = rho*g*hL*ni*(q-qS); % Potência Estimada (W)
-
-Pinst = PinstMW.*1000000; %Conversão MW -> W
+    
+    % ----------- Constantes
+    rend = zeros(1,num_usinas);                      % rendimento (%)
+    hl = zeros(1,num_usinas);                        % queda líquida (m)
+    qs = zeros(1,num_usinas);                        % vazão sanitária (m³/s)
+    desc = zeros(1,num_usinas);                      % descontos = (1-TEIF)*(1-IP)*(1-PerdasEletric)
+    for i = 1:num_usinas
+        rend(1, i) = premissas(2,i);
+        hl(1, i) = premissas(5,i);
+        qs(1, i) = premissas(6,i);
+        desc(1, i) = premissas(13,i);
+    end
+    rho = 1000;                             % massa específica da água (Kg/m³)
+    g = 9.81;                               % m³/s²
+    PinstMW = ones(1, num_usinas)*30;                % potência instalada por usina (MW)
+    
+    
+    % ----------- Variáveis
+    q = le_vazoes();                        % séries históricas de vazão
+    H = le_datas();
+    
+    L = zeros(6,1);                         % número de observações (meses) de cada amostra
+    for i=1:6
+        nome = strcat('pch', int2str(i));
+        L(i) = size(q.(nome), 1);
+    end
+    ANOS = floor(L./12);                    % Número de observações em anos
+    
+    Pest = struct('pch1',[],'pch2',[],'pch3',[], ...
+        'pch4',[], 'pch5',[], 'pch6',[]); % datas
+    for i = 1:6
+        nome_campo = strcat('pch', int2str(i));
+        Pest.(nome_campo) = rho*g*hl*rend*(q.(nome_campo)-qs);      % Vetor de potências estimadas (W)
+        Pinst = PinstMW.*1000000;                                   %Conversão MW -> W
+    end
+    
+    
+ 
+    
+    
 
 % Matriz de potências geradas (W)
 Pger = zeros(l,cenarios);
@@ -83,15 +79,16 @@ for c=1:cenarios
     end
 end
 
-qAno = zeros(anos,1); % Potência vezes vazão
+qAno = zeros(anos,1);                   
 dvp_qAno = zeros(anos,1);
 for i=1:anos
-     ini = 1 + (i-1)*12;
-     fim = i*12;
-    % Vazão média anual
-    qAno(i)= sum(q(ini:fim,1))/12;
-    % Desvio padrão da vazão  anual
-    dvp_qAno(i) = std(q(ini:fim,1));
+    
+    ini = 1 + (i-1)*12;
+    fim = i*12;
+     
+    qAno(i)= sum(q(ini:fim,1))/12;      % Vazão média anual
+    
+    dvp_qAno(i) = std(q(ini:fim,1));    % Desvio padrão da vazão  anual
 end
 
 

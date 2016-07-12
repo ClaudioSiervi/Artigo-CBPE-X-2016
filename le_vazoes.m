@@ -25,7 +25,7 @@ function [q] = le_vazoes()
     end
 
     %d = le_datas;
-    plota_vazoes(q)
+    %plota_vazoes(q)
 
 end
 

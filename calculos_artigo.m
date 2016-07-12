@@ -22,5 +22,6 @@ for i = 1:u
     % cálculos
     Pch(i).p_estW = Pch(i).rho*Pch(i).g*Pch(i).hl*Pch(i).rend*(Pch(i).q - Pch(i).qs);
     Pch(i).p_instW = Pch(i).p_instMW * 1000000;
+    Pch(i).p_gerW = min(Pch(i).p_estW, Pch(i).p_instW).*Pch(i).desc;
 end
 dd

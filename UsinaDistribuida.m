@@ -21,7 +21,7 @@ classdef UsinaDistribuida
         p_instMW;     % potência instalada na usina (MW)
         p_instW;      % potência instalada na usina (W)
         p_estW;        % potências estimadas a partir do histórico de vazões (W)
-        p_ger;        % potências geradas para cada período do histórico (W)
+        p_gerW;        % potências geradas para cada período do histórico (W)
         p_gerMW;      % ""  (MW) W -> MW
         p_gerMWh;     % MW -> MWh
         p_gerMWmAno;   % 

@@ -18,8 +18,9 @@ classdef UsinaDistribuida
         qs;           % vazão sanitária (m³/s)
         desc;         % descontos = (1-TEIF)*(1-IP)*(1-PerdasEletric) (%)
         c_int;        % consumo interno (MW)
-        p_inst;       % potência instalada na usina (MW)
-        p_est;        % potências estimadas a partir do histórico de vazões (W)
+        p_instMW;     % potência instalada na usina (MW)
+        p_instW;      % potência instalada na usina (W)
+        p_estW;        % potências estimadas a partir do histórico de vazões (W)
         p_ger;        % potências geradas para cada período do histórico (W)
         p_gerMW;      % ""  (MW) W -> MW
         p_gerMWh;     % MW -> MWh

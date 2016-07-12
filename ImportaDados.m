@@ -17,9 +17,9 @@ classdef  ImportaDados
         premissas;          % potência instalada, teif, ip, perdas elétricas, ...
     end
     
+    
     methods
-        
-        % Lê do excel as séries de vazão, horas e premissas 
+        % ----- Lê do excel as séries de vazão, horas e premissas 
         function obj = ImportaDados()
             % SAÍDAS
             %   obj -> objeto contendo todas as séries lidas do excel
@@ -30,7 +30,7 @@ classdef  ImportaDados
             obj.premissas = xlsread(rota, ImportaDados.aba3, ImportaDados.intervalo3');   
         end
         
-        % Retida as linhas vazias das séries lidas do excel
+        % ----- Retida as linhas vazias das séries lidas do excel
         function dados = LimpaSerie(obj, serie)
             % ENTRADAS
             %   serie -> serie de dados lidos do excel com linhas NaN
@@ -49,5 +49,6 @@ classdef  ImportaDados
             varlist = {'obj', 'serie', 'fim'};                  
             clear(varlist{:})
         end
+        
     end
 end

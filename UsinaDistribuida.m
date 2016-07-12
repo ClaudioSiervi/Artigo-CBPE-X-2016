@@ -1,6 +1,6 @@
 
 % Classe Usina Distribuída
-classdef UsinaD
+classdef UsinaDistribuida
    
     properties(Constant = true)
         rho = 1000;                             % massa específica da água (Kg/m³)

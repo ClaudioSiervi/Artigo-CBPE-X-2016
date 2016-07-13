@@ -34,6 +34,51 @@ classdef Ferramentas
             dados = dias(1:(l-1),1);                        % retira a última linha
         end
        
-	end
+   
+        %------------------------------------------------------------------
+       
+        
+        % ----- Média aritmética simples
+        function ma = MediaAritmetica(serie)
+
+            ma = mean(serie(:, 1));
+        end
+        
+        % ----- Média harmônica simples
+        function mh = MediaHarmonica(serie)
+
+            mh = harmmean(serie(:, 1));  
+        end
+        
+%         % ----- Média harmônica da potência ponderada pela vazão
+%         function mhp = MediaHarmonicaPond(PgerMWmAno,qAno)
+% 
+%             mhp = (sum(qAno)/sum(qAno./PgerMWmAno));
+%         end
+        
+        % ----- Permanência que ficou acima da média
+        function per = FreqAcumulada(serie, media, anos)
+            
+            per = (sum(serie(:,1) >= media)/anos)*100;
+        end
+        
+        % ------ Desvio dos resíduos ao quadrado
+        function dvp = DvpResiduosQuad(serie, media)
+            
+            dvp = std((serie(:,1) - media).^2);
+        end
+        
+        % ----- Desvio dos resíduos em relação a MA em módulo
+        function dvp = DvpResiduosAbs(serie, media)
+
+            dvp = std(abs(serie(:,1) - media));
+        end
+        
+        % ----- Garatia Física
+        function gf = GarantiaFisica(media, desc, cint)
+            
+            gf = media * desc - cint;
+        end
+    end
     
 end

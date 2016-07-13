@@ -17,8 +17,8 @@ classdef  ImportaDados
         premissas;          % potência instalada, teif, ip, perdas elétricas, ...
     end
     
-    
     methods
+        
         % ----- Lê do excel as séries de vazão, horas e premissas 
         function obj = ImportaDados()
             % SAÍDAS
@@ -29,6 +29,5 @@ classdef  ImportaDados
             obj.horas = xlsread(rota, ImportaDados.aba2, ImportaDados.intervalo2');  
             obj.premissas = xlsread(rota, ImportaDados.aba3, ImportaDados.intervalo3');   
         end
-        
     end
 end

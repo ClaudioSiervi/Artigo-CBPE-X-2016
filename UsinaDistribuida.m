@@ -22,17 +22,24 @@ classdef UsinaDistribuida
         p_instW;      % potência instalada na usina (W)
         
         % ----- Valores Estimados
+        gf;                 % Garantia Física
         p_estW;             % potências estimadas a partir do histórico de vazões (W)
         p_gerW;             % potências geradas para cada período do histórico (W)
         p_gerMW;            % potências geradas para cada período do histórico (MW)
         p_gerMWh;           % potências geradas para cada período do histórico (MWh)
+        p_gerMWmAno;        % Energia Média Anual (ponderada pelas horas do mês) "MWm = MWh/h" (ini:fim =12)
         
         % ----- Estatísticas    
-        ma_p_gerMWmAno ;%= calc_ma_p_gerMWmAno;     % Energia Média Anual (ponderada pelas horas do mês) "MWm = MWh/h" (ini:fim =12)
-        dvp_p_gerMWmAno;    % desv. padrão das potências médias anuais 
+        
+        dvp_p_gerMWmAno;        % desv. padrão das potências médias anuais 
 
         ma_q_ano;
-        dvp_q_ano;          % dev. padrão das vazões médias anuais
+        dvp_q_ano;              % dev. padrão das vazões médias anuais
+        
+        ma_prt;                 % Média aritmética igual a calculada pela PRT 463/2009
+        mh_prt;
+        ma_pph;                 % Média Aritmética das potências ponderadas pelas horas dos meses
+        mh_pph;                 % Média Harmônica das potências ponderadas pelas horas dos meses
     end
    
     
@@ -40,13 +47,13 @@ classdef UsinaDistribuida
         
         % -----
         function obj = UsinaDistribuida()
-            %obj.ma_p_gerMWmAno = obj.calc_ma_p_gerMWmAno(obj);
+            obj.gf = GarantiaFisica;
         end
     end
     
     methods(Static)
         
-        % ----- energia média anual (ponderada pelas horas do mês)
+        % ----- Energia média anual (ponderada pelas horas do mês)
         function rst = calc_ma_p_gerMWmAno(usina)
 
             rst = zeros(usina.anos,1);
@@ -57,7 +64,7 @@ classdef UsinaDistribuida
             end
         end
         
-        % ----- desvio padrão da energia média anual ponderada por hora-mês
+        % ----- Desvio padrão da energia média anual ponderada por hora-mês
         function rst = calc_dvp_p_gerMWmAno(usina)     
         
             for i = 1:usina.anos
@@ -79,7 +86,7 @@ classdef UsinaDistribuida
             end       
         end
         
-       % ----- Desvio padrão da vazão anual
+       % ----- Desvio padrão da vazão média anual
        function rst = calc_dvp_qAno(usina)
            
             rst = zeros(usina.anos,1);

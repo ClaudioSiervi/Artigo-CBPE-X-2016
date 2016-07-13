@@ -148,7 +148,7 @@ perMH = zeros(1,cenarios);
 dvpMH = zeros(1,cenarios);
 dvpMHabs = zeros(1,cenarios);
 for c = 1:cenarios
-    % Média com é calculada na PoRTaria do MME
+    % Média
     MH(1, c) = harmmean(PgerMWmAno(:, c));  
     % Permanencia de anos em que PgerWm ficou acima da MA.
     perMH(1, c) = (sum(PgerMWmAno(:, c) >= MH(1, c))/anos)*100;
@@ -156,33 +156,33 @@ for c = 1:cenarios
     dvpMH(1, c) = std((PgerMWmAno(:, c) - MH(1, c)).^2);
     % Desvio dos resíduos em relação a MA em módulo
     dvpMHabs(1, c) = std(abs(PgerMWmAno(:, c) - MH(1, c)));
-%     % Média com é calculada na PoRTaria do MME
-%     MH(1, c) = harmmean(PgerMW(:, c));  
-%     % Permanencia de anos em que PgerWm ficou acima da MA.
-%     perMH(1, c) = (sum(PgerMW(:, c) >= MH(1, c))/l)*100;
-%     % Desvio dos resíduos em relação a MA ao quadrado
-%     dvpMH(1, c) = std((PgerMW(:, c) - MH(1, c)).^2);
-%     % Desvio dos resíduos em relação a MA em módulo
-%     dvpMHabs(1, c) = std(abs(PgerMW(:, c) - MH(1, c)));
-end
-
-%----- Média Harmônica ponderada pelas horas mensais e vazões anuais
-MHP = zeros(1,cenarios);
-perMHP = zeros(1,cenarios);
-dvpMHP = zeros(1,cenarios);
-dvpMHPabs = zeros(1,cenarios);
-
-for c = 1:cenarios
-    %MHP =(sum(qAno)/sum(qAno./PgerMWmAno));
     % Média com é calculada na PoRTaria do MME
-    MHP(1, c) = (sum(qAno)/sum(qAno./PgerMWmAno(:, c)));
+    MH(1, c) = harmmean(PgerMW(:, c));  
     % Permanencia de anos em que PgerWm ficou acima da MA.
-    perMHP(1, c) = (sum(PgerMWmAno(:, c) >= MHP(1, c))/anos)*100;
+    perMH(1, c) = (sum(PgerMW(:, c) >= MH(1, c))/l)*100;
     % Desvio dos resíduos em relação a MA ao quadrado
-    dvpMHP(1, c) = std((PgerMWmAno(:, c) - MHP(1, c)).^2);
+    dvpMH(1, c) = std((PgerMW(:, c) - MH(1, c)).^2);
     % Desvio dos resíduos em relação a MA em módulo
-    dvpMHPabs(1, c) = std(abs(PgerMWmAno(:, c) - MHP(1, c)));
+    dvpMHabs(1, c) = std(abs(PgerMW(:, c) - MH(1, c)));
 end
+
+% %----- Média Harmônica ponderada pelas horas mensais e vazões anuais
+% MHP = zeros(1,cenarios);
+% perMHP = zeros(1,cenarios);
+% dvpMHP = zeros(1,cenarios);
+% dvpMHPabs = zeros(1,cenarios);
+% 
+% for c = 1:cenarios
+%     %MHP =(sum(qAno)/sum(qAno./PgerMWmAno));
+%     % Média com é calculada na PoRTaria do MME
+%     MHP(1, c) = (sum(qAno)/sum(qAno./PgerMWmAno(:, c)));
+%     % Permanencia de anos em que PgerWm ficou acima da MA.
+%     perMHP(1, c) = (sum(PgerMWmAno(:, c) >= MHP(1, c))/anos)*100;
+%     % Desvio dos resíduos em relação a MA ao quadrado
+%     dvpMHP(1, c) = std((PgerMWmAno(:, c) - MHP(1, c)).^2);
+%     % Desvio dos resíduos em relação a MA em módulo
+%     dvpMHPabs(1, c) = std(abs(PgerMWmAno(:, c) - MHP(1, c)));
+% end
 % Impressão de resutados
 disp ('   ');
 disp ('------------- MÉDIAS --------------');

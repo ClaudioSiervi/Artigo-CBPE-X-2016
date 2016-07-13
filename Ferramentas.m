@@ -1,9 +1,9 @@
 classdef Ferramentas
     
-    methods
+    methods(Static)
         
            % ----- Retida as linhas vazias das séries lidas do excel
-        function dados = LimpaSerie(obj, serie)
+        function dados = LimpaSerie(serie)
             % ENTRADAS
             %   serie -> serie de dados lidos do excel com linhas NaN
             
@@ -24,7 +24,7 @@ classdef Ferramentas
         
         
         % ----- Estima o número de horas entre dois meses
-        function dados = EstimaHoras(obj, data)           
+        function dados = EstimaHoras(data)           
 
             [l]=size(data,1);
             dias = zeros(l,1);

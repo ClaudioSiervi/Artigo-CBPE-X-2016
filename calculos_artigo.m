@@ -7,6 +7,7 @@ Pch(u) = UsinaDistribuida;
 Ferramenta = Ferramentas;
 
 for i = 1:u
+    
     % leitura e pré processamento
     Pch(i).nome = strcat('pch', int2str(i));
     Pch(i).horas = Ferramenta.EstimaHoras(Ferramenta.LimpaSerie(Dados.horas(:, i)));
@@ -29,6 +30,7 @@ for i = 1:u
     
     % estatísticas
     Pch(i).ma_p_gerMWmAno = Pch(i).calc_ma_p_gerMWmAno(Pch(i));
+    Pch(i).dvp_p_gerMWmAno = Pch(i).calc_dvp_p_gerMWmAno(Pch(i));
     
     
 end

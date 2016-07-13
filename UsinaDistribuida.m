@@ -57,16 +57,15 @@ classdef UsinaDistribuida
             end
         end
         
-        % -----
+        % ----- desvio padrão da energia média anual ponderada por hora-mês
         function rst = calc_dvp_p_gerMWmAno(usina)     
-        % desvio padrão da energia média anual ponderada por hora-mês
+        
             for i = 1:usina.anos
                 ini = 1 + (i-1)*12;
                 fim = i*12;
                 rst.dvp_p_gerMWmAno(i,1) = std(usina.p_gerMWh(ini:fim,1)./usina.horas(ini:fim,1));
             end
         end
-        
         
         % ----- Desvio padrão das potências anuais
         function dvp = dvpPgerAno(usina)

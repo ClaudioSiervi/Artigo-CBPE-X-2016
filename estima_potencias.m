@@ -41,14 +41,10 @@ num_usinas =6;
     for i = 1:6
         nome_campo = strcat('pch', int2str(i));
         Pest.(nome_campo) = rho*g*hl*rend*(q.(nome_campo)-qs);      % Vetor de potências estimadas (W)
-        Pinst = PinstMW.*1000000;                                   %Conversão MW -> W
+        Pinst = PinstMW.*1000000;                                   % conversão MW -> W
     end
     
     
- 
-    
-    
-
 % Matriz de potências geradas (W)
 Pger = zeros(l,cenarios);
 for i=1:cenarios
@@ -61,11 +57,12 @@ PgerMW = Pger./1000000;
 %Matriz Geração % MW -> MWh
 PgerMWh = zeros(l,cenarios);
 for i=1:cenarios
-    PgerMWh(:,i) = PgerMW(:,i).*H; % Potência Gerada (W)
+    PgerMWh(:,i) = PgerMW(:,i).*H; % Potência Gerada (MW)
 end
 
 % Valores médios anuais
 PgerMWmAno = zeros(anos,cenarios);
+
 dvpPgerAno = zeros(anos,cenarios);
 
 for c=1:cenarios
@@ -93,11 +90,20 @@ end
 
 
 
+
+
+
+
  disp('   PgerMW30');
  disp(PgerMW(:,6)); 
  clc
  disp( 'PgerMWh30');
  disp(PgerMWh(:, 6)); 
+ 
+ 
+ 
+ 
+ 
  
 %*******************  Estatísticas  ****************
 
@@ -124,6 +130,7 @@ MA = zeros(1,cenarios);
 perMA = zeros(1,cenarios);
 dvpMA = zeros(1,cenarios);
 dvpMAabs = zeros(1,cenarios);
+
 for c = 1:cenarios
     % Média com é calculada na PoRTaria do MME
     MA(1, c) = mean(PgerMWmAno(:, c));  

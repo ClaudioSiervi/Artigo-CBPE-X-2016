@@ -19,9 +19,17 @@ for i = 1:u
     Pch(i).qs = Dados.premissas(4, i);
     Pch(i).desc = Dados.premissas(11, i);
     Pch(i).c_int = Dados.premissas(13, i);    
+    
     % cálculos
-    Pch(i).p_estW = Pch(i).rho*Pch(i).g*Pch(i).hl*Pch(i).rend*(Pch(i).q - Pch(i).qs);
-    Pch(i).p_instW = Pch(i).p_instMW * 1000000;
-    Pch(i).p_gerW = min(Pch(i).p_estW, Pch(i).p_instW).*Pch(i).desc;
+    Pch(i).p_instW = Pch(i).p_instMW * 1000000; %Conversão MW -> W
+    Pch(i).p_estW = Pch(i).rho*Pch(i).g*Pch(i).hl*Pch(i).rend*(Pch(i).q - Pch(i).qs);   % (W)
+    Pch(i).p_gerW = min(Pch(i).p_estW, Pch(i).p_instW).*Pch(i).desc;                    % (W)
+    Pch(i).p_gerMW = Pch(i).p_gerW./1000000; % W -> MW
+    Pch(i).p_gerMWh = Pch(i).p_gerMW .*Pch(i).horas; 
+    
+    % estatísticas
+    Pch(i).ma_p_gerMWmAno = Pch(i).calc_ma_p_gerMWmAno(Pch(i));
+    
+    
 end
 dd

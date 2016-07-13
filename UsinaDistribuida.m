@@ -67,9 +67,28 @@ classdef UsinaDistribuida
             end
         end
         
-        % ----- Desvio padrão das potências anuais
-        function dvp = dvpPgerAno(usina)
-            dvp = zeros(usina.anos,1);         
+        % ----- Vazão média anual
+        function rst = calc_ma_qAno(usina)
+            
+            rst = zeros(usina.anos,1);
+            for i=1:usina.anos
+
+                ini = 1 + (i-1)*12;
+                fim = i*12;
+                rst(i,1)= sum(usina.q(ini:fim,1))/12;      
+            end       
+        end
+        
+       % ----- Desvio padrão da vazão anual
+       function rst = calc_dvp_qAno(usina)
+           
+            rst = zeros(usina.anos,1);
+            for i=1:usina.anos
+
+                ini = 1 + (i-1)*12;
+                fim = i*12;
+                rst(i,1) = std(usina.q(ini:fim,1));    
+            end       
         end
         
         

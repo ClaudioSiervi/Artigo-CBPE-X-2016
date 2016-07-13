@@ -32,6 +32,10 @@ for i = 1:u
     Pch(i).ma_p_gerMWmAno = Pch(i).calc_ma_p_gerMWmAno(Pch(i));
     Pch(i).dvp_p_gerMWmAno = Pch(i).calc_dvp_p_gerMWmAno(Pch(i));
     
+    Pch(i).ma_q_ano = Pch(i).calc_ma_qAno(Pch(i));
+    Pch(i).dvp_q_ano = Pch(i).calc_dvp_qAno(Pch(i));
+    
+    
     
 end
 dd

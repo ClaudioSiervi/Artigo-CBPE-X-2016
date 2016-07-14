@@ -156,6 +156,7 @@ for c = 1:cenarios
     dvpMH(1, c) = std((PgerMWmAno(:, c) - MH(1, c)).^2);
     % Desvio dos resíduos em relação a MA em módulo
     dvpMHabs(1, c) = std(abs(PgerMWmAno(:, c) - MH(1, c)));
+    
     % Média com é calculada na PoRTaria do MME
     MH(1, c) = harmmean(PgerMW(:, c));  
     % Permanencia de anos em que PgerWm ficou acima da MA.

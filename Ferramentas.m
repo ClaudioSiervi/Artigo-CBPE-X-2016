@@ -35,8 +35,30 @@ classdef Ferramentas
         end
        
    
+        % -----------------------------------------------------------------
+        % ----- Energia média anual (ponderada pelas horas do mês)
+        function rst = calc_ma_p_gerMWmAno(usina)
+
+            rst = zeros(usina.anos,1);
+            for i = 1:usina.anos
+                ini = 1 + (i-1)*12;
+                fim = i*12;
+                rst(i,1) = sum(usina.p_gerMWh(ini:fim,1))./sum(usina.horas(ini:fim,1));      
+            end
+        end
+        
+        % ----- Desvio padrão da energia média anual ponderada por hora-mês
+        function rst = calc_dvp_p_gerMWmAno(usina)     
+            
+            rst = zeros(usina.anos,1);
+            for i = 1:usina.anos
+                ini = 1 + (i-1)*12;
+                fim = i*12;
+                rst(i,1) = std(usina.p_gerMWh(ini:fim,1)./usina.horas(ini:fim,1));
+            end
+        end
+        
         %------------------------------------------------------------------
-       
         
         % ----- Média aritmética simples
         function ma = MediaAritmetica(serie)

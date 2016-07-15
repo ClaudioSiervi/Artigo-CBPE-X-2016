@@ -9,7 +9,6 @@ classdef UsinaDistribuida
     properties
         % ----- Premissas
         nome;         % nome da usina distribuída
-        datas;        % datas das amostras que formam as séries históricas
         horas;        % total de horas de cada mês do histórico de vazões (horas)
         meses;        % número de observações de cada amostra em meses
         anos;         % número de observações de cada amostra em anos
@@ -63,7 +62,7 @@ classdef UsinaDistribuida
             for i = 1:usina.anos
                 ini = 1 + (i-1)*12;
                 fim = i*12;
-                rst(i,1) = sum(usina.horas(ini:fim,1));
+                rst(i,1) = 24*sum(usina.horas(ini:fim,1));
             end
         end
         

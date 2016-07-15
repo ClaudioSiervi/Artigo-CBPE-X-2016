@@ -12,11 +12,12 @@ for i = 1:u
     
     % leitura e pré processamento
     Pch(i).nome = strcat('pch', int2str(i));
-    Pch(i).datas = Frmt.LimpaSerie(Dados.horas(:, i));
-    Pch(i).horas = Frmt.EstimaHoras(Pch(i).datas);
+   
+    Pch(i).horas = Frmt.EstimaHoras(Frmt.LimpaSerie(Dados.horas(:, i)));
     Pch(i).meses = size(Pch(i).horas, 1);
     Pch(i).anos = floor(Pch(i).meses./12);
     Pch(i).horas_anos = Pch(i).HorasAnos(Pch(i));                           % Total de horas em cada ano
+    
     Pch(i).q = Frmt.LimpaSerie(Dados.vazoes(:, i));
     Pch(i).p_instMW = Dados.premissas(1, i);
     Pch(i).rend = Dados.premissas(2, i);
@@ -31,7 +32,6 @@ for i = 1:u
     Pch(i).p_gerW = min(Pch(i).p_estW, Pch(i).p_instW).*Pch(i).desc;                    % (W)
     Pch(i).p_gerMW = Pch(i).p_gerW./1000000;                                            % W -> MW
     Pch(i).p_gerMWh = Pch(i).p_gerMW .*Pch(i).horas;                                    % MW -> MWh
-    
     Pch(i).p_gerMWmAno = Frmt.calc_ma_p_gerMWmAno(Pch(i));                              % Energia média anual (ponderada pelas horas do mês)
     Pch(i).dvp_p_gerMWmAno = Frmt.calc_dvp_p_gerMWmAno(Pch(i));                         % Desvio padrão da energia média anual
     
@@ -46,9 +46,9 @@ for i = 1:u
     
     Pch(i).mh_prt = Frmt.MediaHarmonica(Pch(i).p_gerMW);            % Média Harm. mensal (Pger em MW)
     
-    Pch(i).ma_pph = Frmt.MediaAritPonderada(Pch(i).p_gerMWmAno);       % Média Arit. mensal (Pger em MWm)
+    Pch(i).ma_pph = Frmt.MediaAritPonderada(Pch(i).p_gerMWmAno, Pch(i).horas_anos);   % Média Arit. mensal (Pger em MWm)
     
-    Pch(i).mh_pph = Frmt.MediaHarmonica(Pch(i).p_gerMWmAno);        % Média Arit. mensal (Pger em MWm)
+    Pch(i).mh_pph = Frmt.MediaHarmPonderada(Pch(i).p_gerMWmAno,Pch(i).horas_anos);        % Média Arit. mensal (Pger em MWm)
     
     % Cálculo das garantias físicas
     Pch(i).gf.ma_prt = Frmt.GarantiaFisica(Pch(i).ma_prt, Pch(i).desc, Pch(i).c_int);

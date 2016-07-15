@@ -18,8 +18,8 @@ classdef Ferramentas
             
             dados = serie(1:fim);
 
-            varlist = {'obj', 'serie', 'fim'};                  
-            clear(varlist{:})
+%             varlist = {'obj', 'serie', 'fim'};                  
+%             clear(varlist{:})
         end
         
         
@@ -69,13 +69,19 @@ classdef Ferramentas
         % ----- Média aritmética ponderada
         function ma = MediaAritPonderada(serie1, serie2)
 
-            ma = sum(serie1(:, 1) * serie2(:, 1))/sum(serie2(:, 1));
+            ma = sum(serie1(:, 1).*serie2(:, 1))./sum(serie2(:, 1));
         end
         
         % ----- Média harmônica simples
         function mh = MediaHarmonica(serie)
 
             mh = harmmean(serie(:, 1));  
+        end
+        
+        %----- Média harmônica ponderada pelas horas anuais
+        function mhp = MediaHarmPonderada(serie1, serie2)
+
+            mhp = (sum(serie2(:,1))/sum(serie2(:,1)./serie1(:, 1)));
         end
         
 %         % ----- Média harmônica da potência ponderada pela vazão

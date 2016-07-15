@@ -9,6 +9,7 @@ classdef UsinaDistribuida
     properties
         % ----- Premissas
         nome;         % nome da usina distribuída
+        datas;        % datas das amostras que formam as séries históricas
         horas;        % total de horas de cada mês do histórico de vazões (horas)
         meses;        % número de observações de cada amostra em meses
         anos;         % número de observações de cada amostra em anos

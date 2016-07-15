@@ -132,8 +132,9 @@ dvpMA = zeros(1,cenarios);
 dvpMAabs = zeros(1,cenarios);
 
 for c = 1:cenarios
-    % Média com é calculada na PoRTaria do MME
+    % Média arit. das potências anuais ponderadas pelas horas de cada ano
     MA(1, c) = mean(PgerMWmAno(:, c));  
+    
     % Permanencia de anos em que PgerWm ficou acima da MA.
     perMA(1, c) = (sum(PgerMWmAno(:, c) >= MA(1, c))/anos)*100;
     % Desvio dos resíduos em relação a MA ao quadrado
@@ -148,8 +149,9 @@ perMH = zeros(1,cenarios);
 dvpMH = zeros(1,cenarios);
 dvpMHabs = zeros(1,cenarios);
 for c = 1:cenarios
-    % Média
+    % Média Harmônica das potências anuais ponderada pelas horas dos anos
     MH(1, c) = harmmean(PgerMWmAno(:, c));  
+    
     % Permanencia de anos em que PgerWm ficou acima da MA.
     perMH(1, c) = (sum(PgerMWmAno(:, c) >= MH(1, c))/anos)*100;
     % Desvio dos resíduos em relação a MA ao quadrado

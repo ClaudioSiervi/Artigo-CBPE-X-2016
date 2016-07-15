@@ -36,7 +36,7 @@ classdef Ferramentas
        
    
         % -----------------------------------------------------------------
-        % ----- Energia média anual (ponderada pelas horas do mês)
+        % ----- Energia média anual (ponderada pelas horas dos mêses)
         function rst = calc_ma_p_gerMWmAno(usina)
 
             rst = zeros(usina.anos,1);
@@ -64,6 +64,12 @@ classdef Ferramentas
         function ma = MediaAritmetica(serie)
 
             ma = mean(serie(:, 1));
+        end
+        
+        % ----- Média aritmética ponderada
+        function ma = MediaAritPonderada(serie1, serie2)
+
+            ma = sum(serie1(:, 1) * serie2(:, 1))/sum(serie2(:, 1));
         end
         
         % ----- Média harmônica simples

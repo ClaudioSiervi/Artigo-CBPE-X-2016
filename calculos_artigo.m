@@ -15,7 +15,7 @@ for i = 1:u
     Pch(i).horas = Frmt.EstimaHoras(Frmt.LimpaSerie(Dados.horas(:, i)));
     Pch(i).meses = size(Pch(i).horas, 1);
     Pch(i).anos = floor(Pch(i).meses./12);
-    Pch(i).horas_anos = Pch(i).HorasAnos(Pch(i));
+    Pch(i).horas_anos = Pch(i).HorasAnos(Pch(i));                           % Total de horas em cada ano
     Pch(i).q = Frmt.LimpaSerie(Dados.vazoes(:, i));
     Pch(i).p_instMW = Dados.premissas(1, i);
     Pch(i).rend = Dados.premissas(2, i);
@@ -49,16 +49,20 @@ for i = 1:u
     Pch(i).gf.ma_prt = Frmt.GarantiaFisica(Pch(i).ma_prt, Pch(i).desc, Pch(i).c_int);
     Pch(i).gf.frq_ma_prt = Frmt.FreqAcumulada(Pch(i).p_gerMW,Pch(i).gf.ma_prt, Pch(i).meses);
     Pch(i).gf.dvp_ma_prt = Frmt.DvpResiduosQuad(Pch(i).p_gerMW, Pch(i).gf.ma_prt);
+    Pch(i).gf.dvp_abs_ma_prt = Frmt.DvpResiduosAbs(Pch(i).p_gerMW, Pch(i).gf.ma_prt);
     
     Pch(i).gf.mh_prt = Frmt.GarantiaFisica(Pch(i).mh_prt, Pch(i).desc, Pch(i).c_int);
     Pch(i).gf.frq_mh_prt = Frmt.FreqAcumulada(Pch(i).p_gerMW, Pch(i).gf.mh_prt, Pch(i).meses);
     Pch(i).gf.dvp_mh_prt = Frmt.DvpResiduosQuad(Pch(i).p_gerMW, Pch(i).gf.mh_prt);
-                        
+    Pch(i).gf.dvp_abs_mh_prt = Frmt.DvpResiduosAbs(Pch(i).p_gerMW, Pch(i).gf.mh_prt);
+    
     Pch(i).gf.ma_pph = Frmt.GarantiaFisica(Pch(i).ma_pph, Pch(i).desc, Pch(i).c_int);
     Pch(i).gf.frq_ma_pph = Frmt.FreqAcumulada(Pch(i).p_gerMWmAno, Pch(i).gf.ma_pph, Pch(i).anos); 
     Pch(i).gf.dvp_ma_pph = Frmt.DvpResiduosQuad(Pch(i).p_gerMWmAno, Pch(i).gf.ma_pph);
+    Pch(i).gf.dvp_abs_ma_pph = Frmt.DvpResiduosAbs(Pch(i).p_gerMWmAno, Pch(i).gf.ma_pph);
     
     Pch(i).gf.mh_pph = Frmt.GarantiaFisica(Pch(i).mh_pph, Pch(i).desc, Pch(i).c_int);
     Pch(i).gf.frq_mh_pph = Frmt.FreqAcumulada(Pch(i).p_gerMWmAno, Pch(i).gf.mh_pph, Pch(i).anos);
     Pch(i).gf.dvp_mh_pph = Frmt.DvpResiduosQuad(Pch(i).p_gerMWmAno, Pch(i).gf.mh_pph);
+    Pch(i).gf.dvp_abs_mh_pph = Frmt.DvpResiduosAbs(Pch(i).p_gerMWmAno, Pch(i).gf.mh_pph);
 end

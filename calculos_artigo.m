@@ -46,9 +46,9 @@ for i = 1:u
     
     Pch(i).mh_prt = Frmt.MediaHarmonica(Pch(i).p_gerMW);            % Média Harm. mensal (Pger em MW)
     
-    Pch(i).ma_pph = Frmt.MediaAritPonderada(Pch(i).p_gerMWmAno, Pch(i).horas_anos);   % Média Arit. mensal (Pger em MWm)
+    Pch(i).ma_pph = Frmt.MediaAritPonderada(Pch(i).p_gerMWmAno, Pch(i).horas_anos);   % Média Arit. ponderada pelas horas anuais
     
-    Pch(i).mh_pph = Frmt.MediaHarmPonderada(Pch(i).p_gerMWmAno,Pch(i).horas_anos);        % Média Arit. mensal (Pger em MWm)
+    Pch(i).mh_pph = Frmt.MediaHarmPonderada(Pch(i).p_gerMWmAno,Pch(i).horas_anos);    % Média Harm. ponderada pelas horas anuais
     
     % Cálculo das garantias físicas
     Pch(i).gf.ma_prt = Frmt.GarantiaFisica(Pch(i).ma_prt, Pch(i).desc, Pch(i).c_int);
@@ -71,3 +71,16 @@ for i = 1:u
     Pch(i).gf.dvp_mh_pph = Frmt.DvpResiduosQuad(Pch(i).p_gerMWmAno, Pch(i).gf.mh_pph);
     Pch(i).gf.dvp_abs_mh_pph = Frmt.DvpResiduosAbs(Pch(i).p_gerMWmAno, Pch(i).gf.mh_pph);
 end
+
+gf = Pch(1).gf;
+ma_prt = {gf.ma_prt; gf.frq_ma_prt; gf.dvp_ma_prt; gf.dvp_abs_ma_prt}; % cell
+mh_prt = [gf.mh_prt; gf.frq_mh_prt; gf.dvp_mh_prt; gf.dvp_abs_mh_prt]; % or array?
+ma_pph = [gf.ma_pph; gf.frq_ma_pph; gf.dvp_ma_pph; gf.dvp_abs_ma_pph];
+mh_pph = [gf.mh_pph; gf.frq_mh_pph; gf.dvp_mh_pph; gf.dvp_abs_mh_pph];
+
+
+for i =1:u
+    Pch(1).gf.ma_prt
+end
+
+Dados.ExportaDados(Dados, Pch)

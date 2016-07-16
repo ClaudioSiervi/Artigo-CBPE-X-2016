@@ -5,7 +5,7 @@ u = 6;      % número de usinas
 Pch(u) = UsinaDistribuida;
 %Pch(1:u).gf = GarantiaFisica;
 
-Dados = ImportaDados;
+Dados = BasesDados;
 Frmt = Ferramentas;
 
 for i = 1:u
@@ -51,7 +51,7 @@ for i = 1:u
     Pch(i).mh_pph = Frmt.MediaHarmPonderada(Pch(i).p_gerMWmAno,Pch(i).horas_anos);    % Média Harm. ponderada pelas horas anuais
     
     % Cálculo das garantias físicas
-    Pch(i).gf.ma_prt = Frmt.GarantiaFisica(Pch(i).ma_prt, Pch(i).desc, Pch(i).c_int);
+    Pch(i).gf.ma_prt.GarantiaFisica(Pch(i).ma_prt, Pch(i).desc, Pch(i).c_int);
     Pch(i).gf.frq_ma_prt = Frmt.FreqAcumulada(Pch(i).p_gerMW,Pch(i).gf.ma_prt, Pch(i).meses);
     Pch(i).gf.dvp_ma_prt = Frmt.DvpResiduosQuad(Pch(i).p_gerMW, Pch(i).gf.ma_prt);
     Pch(i).gf.dvp_abs_ma_prt = Frmt.DvpResiduosAbs(Pch(i).p_gerMW, Pch(i).gf.ma_prt);
@@ -72,15 +72,11 @@ for i = 1:u
     Pch(i).gf.dvp_abs_mh_pph = Frmt.DvpResiduosAbs(Pch(i).p_gerMWmAno, Pch(i).gf.mh_pph);
 end
 
-gf = Pch(1).gf;
-ma_prt = {gf.ma_prt; gf.frq_ma_prt; gf.dvp_ma_prt; gf.dvp_abs_ma_prt}; % cell
-mh_prt = [gf.mh_prt; gf.frq_mh_prt; gf.dvp_mh_prt; gf.dvp_abs_mh_prt]; % or array?
-ma_pph = [gf.ma_pph; gf.frq_ma_pph; gf.dvp_ma_pph; gf.dvp_abs_ma_pph];
-mh_pph = [gf.mh_pph; gf.frq_mh_pph; gf.dvp_mh_pph; gf.dvp_abs_mh_pph];
+Dados.ImprimeGarantiaFisica(Pch(1).gf);
 
 
-for i =1:u
-    Pch(1).gf.ma_prt
-end
-
-Dados.ExportaDados(Dados, Pch)
+% for i =1:u
+%     Pch(1).gf.ma_prt
+% end
+% 
+% Dados.ExportaDados(Dados, Pch)

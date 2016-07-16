@@ -90,9 +90,16 @@ classdef UsinaDistribuida
                 fim = i*12;
                 rst(i,1) = std(usina.q(ini:fim,1));    
             end       
+       end
+        
+        
+        
+        % ----- Garatia Física
+        function gf = GarantiaFisica(media, desc, cint)
+            
+            gf = media * desc - cint;
         end
-        
-        
+       
     end
    
    

@@ -31,14 +31,5 @@ classdef GarantiaFisica
         
     end
 
-    methods(Static)
-        
-        % ----- Garatia Física
-        function gf = GarantiaFisica(media, desc, cint)
-            
-            gf = media * desc - cint;
-        end
-    end
-    
    
 end

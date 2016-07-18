@@ -94,11 +94,7 @@ classdef UsinaDistribuida
         
         
         
-        % ----- Garatia Física
-        function gf = GarantiaFisica(media, desc, cint)
-            
-            gf = media * desc - cint;
-        end
+
        
     end
    

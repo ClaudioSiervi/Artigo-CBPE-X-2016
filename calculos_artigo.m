@@ -51,7 +51,7 @@ for i = 1:u
     Pch(i).mh_pph = Frmt.MediaHarmPonderada(Pch(i).p_gerMWmAno,Pch(i).horas_anos);    % Média Harm. ponderada pelas horas anuais
     
     % Cálculo das garantias físicas
-    Pch(i).gf.ma_prt.GarantiaFisica(Pch(i).ma_prt, Pch(i).desc, Pch(i).c_int);
+    Pch(i).gf.ma_prt = Frmt.GarantiaFisica(Pch(i).ma_prt, Pch(i).desc, Pch(i).c_int);
     Pch(i).gf.frq_ma_prt = Frmt.FreqAcumulada(Pch(i).p_gerMW,Pch(i).gf.ma_prt, Pch(i).meses);
     Pch(i).gf.dvp_ma_prt = Frmt.DvpResiduosQuad(Pch(i).p_gerMW, Pch(i).gf.ma_prt);
     Pch(i).gf.dvp_abs_ma_prt = Frmt.DvpResiduosAbs(Pch(i).p_gerMW, Pch(i).gf.ma_prt);
@@ -72,11 +72,9 @@ for i = 1:u
     Pch(i).gf.dvp_abs_mh_pph = Frmt.DvpResiduosAbs(Pch(i).p_gerMWmAno, Pch(i).gf.mh_pph);
 end
 
-Dados.ImprimeGarantiaFisica(Pch(1).gf);
+plota_vazoes(Pch)
 
-
-% for i =1:u
-%     Pch(1).gf.ma_prt
+% for i=1:u
+%     Dados.ImprimeGarantiaFisica(Pch(i).gf, i);
 % end
-% 
-% Dados.ExportaDados(Dados, Pch)
+

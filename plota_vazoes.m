@@ -1,13 +1,12 @@
 
 % Plota vazões
-function plota_vazoes(q)
+function plota_vazoes(Pch)
 
     figure
     
-    
     subplot(2,3,1);
-    tam = size(q.pch1,1);
-    plot(1:tam, q.pch1); 
+    tam = size(Pch(1).q,1);
+    plot(1:tam, Pch(1).q); 
     axis([0 tam 20 160]);
     xlabel('Meses');
     ylabel({'Vazão','(m³/s)'});
@@ -15,8 +14,8 @@ function plota_vazoes(q)
     legend('boxoff');
 
     subplot(2,3,2);
-    tam = size(q.pch2,1);
-    plot(1:tam, q.pch2);
+    tam = size(Pch(2).q,1);
+    plot(1:tam, Pch(2).q);
     axis([0 tam 20 120]);
     xlabel('Meses');
     ylabel({'Vazão','(m³/s)'});
@@ -24,8 +23,8 @@ function plota_vazoes(q)
     legend('boxoff');
 
     subplot(2,3,3);
-    tam = size(q.pch3,1);
-    plot(1:tam, q.pch3);
+    tam = size(Pch(3).q,1);
+    plot(1:tam, Pch(3).q);
     axis([0 tam 0 800]);
     xlabel('Meses');
     ylabel({'Vazão','(m³/s)'});
@@ -33,8 +32,8 @@ function plota_vazoes(q)
     legend('boxoff');
 
     subplot(2,3,4);
-    tam = size(q.pch4,1);
-    plot(1:tam, q.pch4);
+    tam = size(Pch(4).q,1);
+    plot(1:tam, Pch(4).q);
     axis([0 tam 0 600]);
     xlabel('Meses');
     ylabel({'Vazão','(m³/s)'});
@@ -42,8 +41,8 @@ function plota_vazoes(q)
     legend('boxoff');
 
     subplot(2,3,5);
-    tam = size(q.pch5,1);
-    plot(1:tam, q.pch5);
+    tam = size(Pch(5).q,1);
+    plot(1:tam, Pch(5).q);
     axis([0 tam 80 400]);
     xlabel('Meses');
     ylabel({'Vazão','(m³/s)'});
@@ -51,8 +50,8 @@ function plota_vazoes(q)
     legend('boxoff');
 
     subplot(2,3,6);
-    tam = size(q.pch6,1);
-    plot(1:tam, q.pch6);
+    tam = size(Pch(6).q,1);
+    plot(1:tam, Pch(6).q);
     axis([0 tam 0 40]);
     xlabel('Meses');
     ylabel({'Vazão','(m³/s)'});

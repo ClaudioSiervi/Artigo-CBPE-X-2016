@@ -38,7 +38,7 @@ classdef  BasesDados
     %--------------
     methods(Static)
         
-        function ImprimeGarantiaFisica(gf)
+        function ImprimeGarantiaFisica(gf,i)
             
             ma_prt = [gf.ma_prt; gf.frq_ma_prt; gf.dvp_ma_prt; gf.dvp_abs_ma_prt]; % cell
             mh_prt = [gf.mh_prt; gf.frq_mh_prt; gf.dvp_mh_prt; gf.dvp_abs_mh_prt]; % or array?
@@ -47,11 +47,25 @@ classdef  BasesDados
             
             garantia_fisica = [ma_prt mh_prt ma_pph mh_pph];
             
+            indice = (i-1)*8;
+            posicao = strcat('C', int2str(indice + 2));
+            
             aba = 'Garantia Física';
-            posicao = 'C4';
             % numerico, celula ou vetor
+            xlswrite(BasesDados.arquivo_saida, {strcat('PCH',int2str(i))}, aba, posicao);
+            posicao = strcat('C', int2str(indice + 3));
+            xlswrite(BasesDados.arquivo_saida, { 'ma_prt' 'mh_prt' 'ma_pph' 'mh_pph'}, aba, posicao);
+            posicao = strcat('C', int2str(indice + 4));
             xlswrite(BasesDados.arquivo_saida, garantia_fisica, aba, posicao);
-            %xlswrite(ImportaDados.arquivo_saida, pch(1).gf,obj.aba_geral);
+            posicao = strcat('B', int2str(indice + 4));
+            top_linha(1,1)={'médias'};
+            top_linha(2,1)={'freq. acumulada'};
+            top_linha(3,1)={'dvp. quadrado'};
+            top_linha(4,1)={'dvp. absoluto'};
+            
+            xlswrite(BasesDados.arquivo_saida,top_linha, aba, posicao);
+            %xlswrite(BasesDados.arquivo_saida, garantia_fisica, aba, posicao);
+            %xlswrite(ImportaDados.arquivo_saida, pch(1).gf,obj.aba_geral);'C3'
             
             
         end

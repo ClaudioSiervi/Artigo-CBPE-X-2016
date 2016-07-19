@@ -90,7 +90,7 @@ classdef Ferramentas
 %             mhp = (sum(qAno)/sum(qAno./PgerMWmAno));
 %         end
         
-        % ----- Permanência que ficou acima da média
+        % ----- Permanência que ficou acima da garantia física
         function per = FreqAcumulada(serie, media, anos)
             
             per = (sum(serie(:,1) >= media)/anos)*100;

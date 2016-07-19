@@ -1,62 +1,78 @@
-% Plota as potencias geradas em MW-mês
+% Gera gráfico da frenquencia acumulada da potência gerada em MW-mês
 function plota_permanencias(Pch)
+    
+    % Determina as frequências 
+    function [f]= frequencia_acumulada(tam)
+        x = ones(tam,1);    x(:,1) = x(:,1)./tam;  f = zeros(tam,1);
+        f(1,1) = x(1,1);
+        for i=2:tam
+            f(i,1) = f(i-1,1)+ x(i,1);
+        end
+    end
+
 
     figure
     
     subplot(2,3,1);
     tam = size(Pch(1).p_gerMW,1);
-    plot(1:tam, Pch(1).p_gerMW); 
-    axis([0 tam 0 40]);
-    xlabel('Meses');
-    ylabel({'Potência Gerada - Usina A','(MW)'});
-    legend('Potência Gerada na Usina A', 'Location', 'northeast');
+    freq = frequencia_acumulada(tam);
+    plot(freq, sort(Pch(1).p_gerMW,'descend'));
+    axis([0 1 0 30]);
+    xlabel('Permanência (%)');
+    ylabel({'Potência Gerada- Usina A','(MW)'});
+    legend('Pger','GF_{MA_PRT}', 'GF_{MA}', 'GF_{MH}', 'Location', 'southwest');
     legend('boxoff');
 
    
     
     subplot(2,3,2);
     tam = size(Pch(2).p_gerMW,1);
-    plot(1:tam, Pch(2).p_gerMW);
-    axis([0 tam 0 40]);
-    xlabel('Meses');
-    ylabel({'Potência Gerada - Usina B','(MW)'});
-    legend('Potência Gerada na Usina B', 'Location', 'northeast');
-    legend('boxoff');
+    freq = frequencia_acumulada(tam);
+    plot(freq, sort(Pch(2).p_gerMW,'descend'));
+axis([0 1 0 30]);
+xlabel('Permanência (%)');
+ylabel({'Potência Gerada- Usina B','(MW)'});
+legend('Pger','MA_{PRT}', 'MA', 'MH', 'Location', 'northeast');
+legend('boxoff');
 
     subplot(2,3,3);
     tam = size(Pch(3).p_gerMW,1);
-    plot(1:tam, Pch(3).p_gerMW);
-    axis([0 tam 0 40]);
-    xlabel('Meses');
-    ylabel({'Potência Gerada - Usina C','(MW)'});
-    legend('Potência Gerada na Usina C', 'Location', 'northeast');
-    legend('boxoff');
+    freq = frequencia_acumulada(tam);
+    plot(freq, sort(Pch(3).p_gerMW,'descend'));
+axis([0 1 0 30]);
+xlabel('Permanência (%)');
+ylabel({'Potência Gerada- Usina C','(MW)'});% x1 = 1:1:n1;
+legend('Pger','MA_{PRT}', 'MA', 'MH', 'Location', 'northeast');
+legend('boxoff');
 
     subplot(2,3,4);
     tam = size(Pch(4).p_gerMW,1);
-    plot(1:tam, Pch(4).p_gerMW);
-    axis([0 tam 0 40]);
-    xlabel('Meses');
-    ylabel({'Potência Gerada - Usina D','(MW)'});
-    legend('Potência Gerada na Usina D', 'Location', 'northeast');
-    legend('boxoff');
+    freq = frequencia_acumulada(tam);
+    plot(freq, sort(Pch(4).p_gerMW,'descend'));
+axis([0 1 0 30]);
+xlabel('Permanência (%)');
+ylabel({'Potência Gerada- Usina D','(MW)'});
+legend('Pger','MA_{PRT}', 'MA', 'MH', 'Location', 'southwest');
+legend('boxoff');
 
     subplot(2,3,5);
     tam = size(Pch(5).p_gerMW,1);
-    plot(1:tam, Pch(5).p_gerMW);
-    axis([0 tam 0 40]);
-    xlabel('Meses');
-    ylabel({'Potência Gerada - Usina E','(MW)'});
-    legend('Potência Gerada na Usina E', 'Location', 'northeast');
-    legend('boxoff');
+    freq = frequencia_acumulada(tam);
+    plot(freq, sort(Pch(5).p_gerMW,'descend'));
+axis([0 1 0 30]);
+xlabel('Permanência (%)');
+ylabel({'Potência Gerada- Usina E','(MW)'});
+legend('Pger','MA_{PRT}', 'MA', 'MH', 'Location', 'southwest');
+legend('boxoff');
 
     subplot(2,3,6);
     tam = size(Pch(6).p_gerMW,1);
-    plot(1:tam, Pch(6).p_gerMW);
-    axis([0 tam 0 40]);
-    xlabel('Meses');
-    ylabel({'Potência Gerada - Usina F','(MW)'});
-    legend('Potência Gerada na Usina F', 'Location', 'northeast');
-    legend('boxoff');
+    freq = frequencia_acumulada(tam);
+    plot(freq, sort(Pch(6).p_gerMW,'descend'));
+axis([0 1 0 30])
+xlabel('Permanência (%)')
+ylabel({'Potência Gerada- Usina F','(MW)'})
+legend('Pger','MA_{PRT}', 'MA', 'MH', 'Location', 'southwest');
+legend('boxoff');
 
 end

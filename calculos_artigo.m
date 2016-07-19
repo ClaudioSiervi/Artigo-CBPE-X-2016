@@ -37,7 +37,7 @@ for i = 1:u
     
     % estatísticas
     Pch(i).ma_q_ano = Pch(i).calc_ma_qAno(Pch(i));                  % Vazão média anual
-    Pch(i).frq_q_ano = Frmt.FreqAcumulada(Pch(i).q, ...
+    Pch(i).frq_q_ano = Frmt.FreqAcumulada(Pch(i).q, ...             % Permanência que ficou acima da vazão média
                             mean(Pch(i).ma_q_ano), Pch(i).meses);
     Pch(i).dvp_q_ano = Pch(i).calc_dvp_qAno(Pch(i));                % Desvio padrão da vazão média anual
     
@@ -52,22 +52,22 @@ for i = 1:u
     
     % Cálculo das garantias físicas
     Pch(i).gf.ma_prt = Frmt.GarantiaFisica(Pch(i).ma_prt, Pch(i).desc, Pch(i).c_int);
-    Pch(i).gf.frq_ma_prt = Frmt.FreqAcumulada(Pch(i).p_gerMW,Pch(i).gf.ma_prt, Pch(i).meses);
-    Pch(i).gf.dvp_ma_prt = Frmt.DvpResiduosQuad(Pch(i).p_gerMW, Pch(i).gf.ma_prt);
+    Pch(i).gf.frq_ma_prt = Frmt.FreqAcumulada(Pch(i).p_gerMW,Pch(i).gf.ma_prt, Pch(i).meses);       % Permanência que ficou acima da garantia física
+    Pch(i).gf.dvp_ma_prt = Frmt.DvpResiduosQuad(Pch(i).p_gerMW, Pch(i).gf.ma_prt);      
     Pch(i).gf.dvp_abs_ma_prt = Frmt.DvpResiduosAbs(Pch(i).p_gerMW, Pch(i).gf.ma_prt);
     
     Pch(i).gf.mh_prt = Frmt.GarantiaFisica(Pch(i).mh_prt, Pch(i).desc, Pch(i).c_int);
-    Pch(i).gf.frq_mh_prt = Frmt.FreqAcumulada(Pch(i).p_gerMW, Pch(i).gf.mh_prt, Pch(i).meses);
+    Pch(i).gf.frq_mh_prt = Frmt.FreqAcumulada(Pch(i).p_gerMW, Pch(i).gf.mh_prt, Pch(i).meses);      % Permanência que ficou acima da garantia física
     Pch(i).gf.dvp_mh_prt = Frmt.DvpResiduosQuad(Pch(i).p_gerMW, Pch(i).gf.mh_prt);
     Pch(i).gf.dvp_abs_mh_prt = Frmt.DvpResiduosAbs(Pch(i).p_gerMW, Pch(i).gf.mh_prt);
     
     Pch(i).gf.ma_pph = Frmt.GarantiaFisica(Pch(i).ma_pph, Pch(i).desc, Pch(i).c_int);
-    Pch(i).gf.frq_ma_pph = Frmt.FreqAcumulada(Pch(i).p_gerMWmAno, Pch(i).gf.ma_pph, Pch(i).anos); 
+    Pch(i).gf.frq_ma_pph = Frmt.FreqAcumulada(Pch(i).p_gerMWmAno, Pch(i).gf.ma_pph, Pch(i).anos);   % Permanência que ficou acima da garantia física
     Pch(i).gf.dvp_ma_pph = Frmt.DvpResiduosQuad(Pch(i).p_gerMWmAno, Pch(i).gf.ma_pph);
     Pch(i).gf.dvp_abs_ma_pph = Frmt.DvpResiduosAbs(Pch(i).p_gerMWmAno, Pch(i).gf.ma_pph);
     
     Pch(i).gf.mh_pph = Frmt.GarantiaFisica(Pch(i).mh_pph, Pch(i).desc, Pch(i).c_int);
-    Pch(i).gf.frq_mh_pph = Frmt.FreqAcumulada(Pch(i).p_gerMWmAno, Pch(i).gf.mh_pph, Pch(i).anos);
+    Pch(i).gf.frq_mh_pph = Frmt.FreqAcumulada(Pch(i).p_gerMWmAno, Pch(i).gf.mh_pph, Pch(i).anos);   % Permanência que ficou acima da garantia física
     Pch(i).gf.dvp_mh_pph = Frmt.DvpResiduosQuad(Pch(i).p_gerMWmAno, Pch(i).gf.mh_pph);
     Pch(i).gf.dvp_abs_mh_pph = Frmt.DvpResiduosAbs(Pch(i).p_gerMWmAno, Pch(i).gf.mh_pph);
 end
@@ -75,6 +75,8 @@ end
 plota_vazoes(Pch)
 
 plota_potencias(Pch)
+
+plota_permanencias(Pch)
 
 % for i=1:u
 %     Dados.ImprimeGarantiaFisica(Pch(i).gf, i);

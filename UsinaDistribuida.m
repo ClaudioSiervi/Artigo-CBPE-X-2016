@@ -31,6 +31,7 @@ classdef UsinaDistribuida
         p_gerMWmAno;        % Energia Média Anual (ponderada pelas horas do mês) "MWm = MWh/h" (ini:fim =12)
         
         % ----- Estatísticas    
+        corr_p_q;               % correlação entre a potência gerada(MW) e a vazão(m³/s)
         
         dvp_p_gerMWmAno;        % desv. padrão das potências médias anuais 
 

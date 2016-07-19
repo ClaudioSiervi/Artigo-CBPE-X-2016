@@ -1,4 +1,5 @@
 clc; clear all;
+close all;
 
 u = 6;      % número de usinas
 
@@ -36,6 +37,8 @@ for i = 1:u
     Pch(i).dvp_p_gerMWmAno = Frmt.calc_dvp_p_gerMWmAno(Pch(i));                         % Desvio padrão da energia média anual
     
     % estatísticas
+    Pch(i).corr_p_q = corrcoef(Pch(i).p_gerMW, Pch(i).q);           % correlação entre a potência gerada(MW) e a vazão(m³/s)
+    
     Pch(i).ma_q_ano = Pch(i).calc_ma_qAno(Pch(i));                  % Vazão média anual
     Pch(i).frq_q_ano = Frmt.FreqAcumulada(Pch(i).q, ...             % Permanência que ficou acima da vazão média
                             mean(Pch(i).ma_q_ano), Pch(i).meses);
@@ -78,7 +81,7 @@ plota_potencias(Pch)
 
 plota_permanencias(Pch)
 
-% for i=1:u
-%     Dados.ImprimeGarantiaFisica(Pch(i).gf, i);
-% end
+
+Dados.ImprimeGarantiaFisica(Pch);
+
 

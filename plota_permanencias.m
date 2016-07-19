@@ -16,11 +16,17 @@ function plota_permanencias(Pch)
     subplot(2,3,1);
     tam = size(Pch(1).p_gerMW,1);
     freq = frequencia_acumulada(tam);
-    plot(freq, sort(Pch(1).p_gerMW,'descend'));
+    gf_ma_prt = Pch(1).gf.ma_prt*ones(tam,1);       % gf ma prt
+    %gf_mh_prt = Pch(1).gf.mh_prt*ones(tam,1);
+    gf_ma_pph = Pch(1).gf.ma_pph*ones(tam,1);       % gf ma pot pond hora
+    gf_mh_pph = Pch(1).gf.mh_pph*ones(tam,1);       % gf mh pot pond hora
+    pot = sort(Pch(1).p_gerMW,'descend');
+    y = [pot,gf_ma_prt, gf_ma_pph, gf_mh_pph];
+    plot(freq, y);
     axis([0 1 0 30]);
     xlabel('Permanência (%)');
-    ylabel({'Potência Gerada- Usina A','(MW)'});
-    legend('Pger','GF_{MA_PRT}', 'GF_{MA}', 'GF_{MH}', 'Location', 'southwest');
+    ylabel({'Potência Gerada(MW) - Usina A'});
+    legend('Pger','GF_{MA-PRT}', 'GF_{MAP}', 'GF_{MHP}', 'Location', 'northeast');
     legend('boxoff');
 
    
@@ -28,51 +34,89 @@ function plota_permanencias(Pch)
     subplot(2,3,2);
     tam = size(Pch(2).p_gerMW,1);
     freq = frequencia_acumulada(tam);
-    plot(freq, sort(Pch(2).p_gerMW,'descend'));
-axis([0 1 0 30]);
-xlabel('Permanência (%)');
-ylabel({'Potência Gerada- Usina B','(MW)'});
-legend('Pger','MA_{PRT}', 'MA', 'MH', 'Location', 'northeast');
-legend('boxoff');
+    gf_ma_prt = Pch(2).gf.ma_prt*ones(tam,1);       % gf ma prt
+    %gf_mh_prt = Pch(2).gf.mh_prt*ones(tam,1);
+    gf_ma_pph = Pch(2).gf.ma_pph*ones(tam,1);       % gf ma pot pond hora
+    gf_mh_pph = Pch(2).gf.mh_pph*ones(tam,1);       % gf mh pot pond hora
+    pot = sort(Pch(2).p_gerMW,'descend');
+    y = [pot,gf_ma_prt, gf_ma_pph, gf_mh_pph];
+    plot(freq, y);
+    axis([0 1 0 30]);
+    xlabel('Permanência (%)');
+    ylabel({'Potência Gerada(MW) - Usina B '});
+    legend('Pger','GF_{MA-PRT}', 'GF_{MAP}', 'GF_{MHP}', 'Location', 'southwest');
+    legend('boxoff');
+    
 
+    
     subplot(2,3,3);
     tam = size(Pch(3).p_gerMW,1);
     freq = frequencia_acumulada(tam);
-    plot(freq, sort(Pch(3).p_gerMW,'descend'));
-axis([0 1 0 30]);
-xlabel('Permanência (%)');
-ylabel({'Potência Gerada- Usina C','(MW)'});% x1 = 1:1:n1;
-legend('Pger','MA_{PRT}', 'MA', 'MH', 'Location', 'northeast');
-legend('boxoff');
-
+    gf_ma_prt = Pch(3).gf.ma_prt*ones(tam,1);       % gf ma prt
+    %gf_mh_prt = Pch(3).gf.mh_prt*ones(tam,1);
+    gf_ma_pph = Pch(3).gf.ma_pph*ones(tam,1);       % gf ma pot pond hora
+    gf_mh_pph = Pch(3).gf.mh_pph*ones(tam,1);       % gf mh pot pond hora
+    pot = sort(Pch(3).p_gerMW,'descend');
+    y = [pot,gf_ma_prt, gf_ma_pph, gf_mh_pph];
+    plot(freq, y);
+    axis([0 1 0 30]);
+    xlabel('Permanência (%)');
+    ylabel({'Potência Gerada(MW) - Usina C'});
+    legend('Pger','GF_{MA-PRT}', 'GF_{MAP}', 'GF_{MHP}', 'Location', 'southwest');
+    legend('boxoff');
+    
+    
+    
     subplot(2,3,4);
     tam = size(Pch(4).p_gerMW,1);
     freq = frequencia_acumulada(tam);
-    plot(freq, sort(Pch(4).p_gerMW,'descend'));
-axis([0 1 0 30]);
-xlabel('Permanência (%)');
-ylabel({'Potência Gerada- Usina D','(MW)'});
-legend('Pger','MA_{PRT}', 'MA', 'MH', 'Location', 'southwest');
-legend('boxoff');
+    gf_ma_prt = Pch(4).gf.ma_prt*ones(tam,1);       % gf ma prt
+    %gf_mh_prt = Pch(4).gf.mh_prt*ones(tam,1);
+    gf_ma_pph = Pch(4).gf.ma_pph*ones(tam,1);       % gf ma pot pond hora
+    gf_mh_pph = Pch(4).gf.mh_pph*ones(tam,1);       % gf mh pot pond hora
+    pot = sort(Pch(4).p_gerMW,'descend');
+    y = [pot,gf_ma_prt, gf_ma_pph, gf_mh_pph];
+    plot(freq, y);
+    axis([0 1 0 30]);
+    xlabel('Permanência (%)');
+    ylabel({'Potência Gerada(MW) - Usina D'});
+    legend('Pger','GF_{MA-PRT}', 'GF_{MAP}', 'GF_{MHP}', 'Location', 'southwest');
+    legend('boxoff');
+    
+
 
     subplot(2,3,5);
     tam = size(Pch(5).p_gerMW,1);
     freq = frequencia_acumulada(tam);
-    plot(freq, sort(Pch(5).p_gerMW,'descend'));
-axis([0 1 0 30]);
-xlabel('Permanência (%)');
-ylabel({'Potência Gerada- Usina E','(MW)'});
-legend('Pger','MA_{PRT}', 'MA', 'MH', 'Location', 'southwest');
-legend('boxoff');
+    gf_ma_prt = Pch(5).gf.ma_prt*ones(tam,1);       % gf ma prt
+    %gf_mh_prt = Pch(5).gf.mh_prt*ones(tam,1);
+    gf_ma_pph = Pch(5).gf.ma_pph*ones(tam,1);       % gf ma pot pond hora
+    gf_mh_pph = Pch(5).gf.mh_pph*ones(tam,1);       % gf mh pot pond hora
+    pot = sort(Pch(5).p_gerMW,'descend');
+    y = [pot,gf_ma_prt, gf_ma_pph, gf_mh_pph];
+    plot(freq, y);
+    axis([0 1 0 30]);
+    xlabel('Permanência (%)');
+    ylabel({'Potência Gerada(MW) - Usina E'});
+    legend('Pger','GF_{MA-PRT}', 'GF_{MAP}', 'GF_{MHP}', 'Location', 'southwest');
+    legend('boxoff');
+    
+    
 
     subplot(2,3,6);
     tam = size(Pch(6).p_gerMW,1);
     freq = frequencia_acumulada(tam);
-    plot(freq, sort(Pch(6).p_gerMW,'descend'));
-axis([0 1 0 30])
-xlabel('Permanência (%)')
-ylabel({'Potência Gerada- Usina F','(MW)'})
-legend('Pger','MA_{PRT}', 'MA', 'MH', 'Location', 'southwest');
-legend('boxoff');
+    gf_ma_prt = Pch(6).gf.ma_prt*ones(tam,1);       % gf ma prt
+    %gf_mh_prt = Pch(6).gf.mh_prt*ones(tam,1);
+    gf_ma_pph = Pch(6).gf.ma_pph*ones(tam,1);       % gf ma pot pond hora
+    gf_mh_pph = Pch(6).gf.mh_pph*ones(tam,1);       % gf mh pot pond hora
+    pot = sort(Pch(6).p_gerMW,'descend');
+    y = [pot,gf_ma_prt, gf_ma_pph, gf_mh_pph];
+    plot(freq, y);
+    axis([0 1 0 30]);
+    xlabel('Permanência (%)');
+    ylabel({'Potência Gerada(MW) - Usina F'});
+    legend('Pger','GF_{MA-PRT}', 'GF_{MAP}', 'GF_{MHP}', 'Location', 'northeast');
+    legend('boxoff');
 
 end

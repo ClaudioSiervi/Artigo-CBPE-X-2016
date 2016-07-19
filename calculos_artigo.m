@@ -74,6 +74,8 @@ end
 
 plota_vazoes(Pch)
 
+plota_potencias(Pch)
+
 % for i=1:u
 %     Dados.ImprimeGarantiaFisica(Pch(i).gf, i);
 % end

@@ -81,7 +81,7 @@ plota_potencias(Pch)
 
 plota_permanencias(Pch)
 
-
 Dados.ImprimeGarantiaFisica(Pch);
 
+Dados.ImprimeAnalise(Pch);
 
